@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cesizen_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=cesizen_db
+    ports:
+      - "5432:5432"
+    volumes:
+      # Chemin mis à jour vers ton dossier SQL
+      - ./SQL/creation_table.sql:/docker-entrypoint-initdb.d/init.sql
+      # Persistance des données
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
