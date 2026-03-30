@@ -1,6 +1,8 @@
 -- Suppression des tables si elles existent (pour pouvoir relancer le script proprement)
 DROP TABLE IF EXISTS configs_respiration;
 DROP TABLE IF EXISTS exercices;
+DROP TABLE IF EXISTS password_reset_tokens;
+DROP TABLE IF EXISTS informations;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 
@@ -15,7 +17,7 @@ CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 nom VARCHAR(100),
 email VARCHAR(150) UNIQUE NOT NULL,
-password VARCHAR(255) NOT NULL,
+password VARCHAR(500) NOT NULL,
 role_id INT NOT NULL,
 CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
@@ -39,6 +41,25 @@ temps_expire INT NOT NULL,
 temps_pause INT DEFAULT 0,
 nombre_cycles INT NOT NULL,
 CONSTRAINT fk_exercice FOREIGN KEY (exercice_id) REFERENCES exercices(id) ON DELETE CASCADE
+);
+
+-- 5. Table des pages d'information
+CREATE TABLE informations (
+id SERIAL PRIMARY KEY,
+titre VARCHAR(200) NOT NULL,
+contenu TEXT,
+is_published BOOLEAN DEFAULT FALSE,
+created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE password_reset_tokens (
+id SERIAL PRIMARY KEY,
+user_id INT NOT NULL,
+token VARCHAR(255) UNIQUE NOT NULL,
+expires_at TIMESTAMP NOT NULL,
+used BOOLEAN DEFAULT FALSE,
+CONSTRAINT fk_user_reset FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 INSERT INTO roles (libelle) VALUES ('ADMIN'), ('USER');
