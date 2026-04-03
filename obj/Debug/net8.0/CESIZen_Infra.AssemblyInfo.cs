@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CESIZen_Infra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39569a588d7afe74ab6461ab0eeaaed7f29182ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5512f9a07a20756b79817782669c093ffd331e3")]
 [assembly: System.Reflection.AssemblyProductAttribute("CESIZen_Infra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CESIZen_Infra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

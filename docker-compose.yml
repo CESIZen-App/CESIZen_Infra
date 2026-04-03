@@ -14,6 +14,33 @@ services:
     volumes:
       - ./SQL/creation_table.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cesizen_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../../
+      dockerfile: CESIZen_API/Dockerfile
+    container_name: cesizen_api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=cesizen_db;Username=postgres;Password=password
+      - JWT_SECRET=Une_Cle_Tres_Longue_Et_Aleatoire_123!
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=hcaudron1@gmail.com
+      - SMTP_PASSWORD=mqoxizfohezkzrgs
+      - SMTP_FROM_NAME=CESIZen
+    ports:
+      - "5001:8080"
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
