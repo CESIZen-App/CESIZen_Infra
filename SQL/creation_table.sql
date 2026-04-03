@@ -64,9 +64,14 @@ CONSTRAINT fk_user_reset FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CA
 
 INSERT INTO roles (libelle) VALUES ('ADMIN'), ('USER');
 
--- Mdp exemple: 'password123' (à hasher plus tard dans ton API)
+-- Administrateur principal (hcaudron1@gmail.com / HHHuuuGGG@@@300605)
 INSERT INTO users (nom, email, password, role_id)
-VALUES ('Admin Zen', 'admin@cesizen.fr', 'hash_admin', 1);
+VALUES (
+    'Hugo Caudron',
+    'hcaudron1@gmail.com',
+    '35FF834C325CD96CD2D09E6AB83B912B1269BD3C136D0784C85D715152CF6467D5853D0626892B7369833E32C6804E979BDB057DBC26BDBC1B5C3DB90B993598:36D7E8693E678860023BABFBF9A50859553B506A3702BC77441F1E54DA590F1398FAED710EE70D5E26EEF6B2436CB699FD499037E3F89505774773D604CED01D',
+    1
+);
 
 INSERT INTO exercices (titre, description, is_public, createur_id)
 VALUES ('Respiration Carrée', 'Idéal pour le stress', true, 1);
