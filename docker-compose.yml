@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15-alpine
@@ -7,7 +5,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=cesizen_db
     ports:
       - "5432:5432"
@@ -22,19 +20,19 @@ services:
 
   api:
     build:
-      context: ../../
-      dockerfile: CESIZen_API/Dockerfile
+      context: ../../CESIZen_API
+      dockerfile: Dockerfile
     container_name: cesizen_api
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=cesizen_db;Username=postgres;Password=password
-      - JWT_SECRET=Une_Cle_Tres_Longue_Et_Aleatoire_123!
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=cesizen_db;Username=postgres;Password=${POSTGRES_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
       - SMTP_HOST=smtp.gmail.com
       - SMTP_PORT=587
-      - SMTP_USER=hcaudron1@gmail.com
-      - SMTP_PASSWORD=mqoxizfohezkzrgs
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_FROM_NAME=CESIZen
     ports:
       - "5001:8080"
